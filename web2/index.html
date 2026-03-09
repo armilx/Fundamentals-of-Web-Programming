@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моніторинг: Вітрова електростанція</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dark-theme"> <div class="container">
+        <header>
+            <h1>🌬️ Вітрова електростанція "Степова"</h1>
+            <p>Останнє оновлення: <span id="lastUpdate" aria-live="polite">--:--:--</span></p>
+        </header>
+
+        <section class="controls">
+            <button id="updateBtn" class="btn btn-primary">🔄 Оновити дані</button>
+            <button id="autoUpdateBtn" class="btn btn-success">▶️ Автооновлення</button>
+            <span id="autoStatus">Вимкнено</span>
+        </section>
+
+        <main class="dashboard" aria-live="polite">
+            <div class="card card-modern" id="card-wind-speed">
+                <h3>Швидкість вітру</h3>
+                <div class="value">
+                    <span id="val-wind-speed" class="big-number">0</span>
+                    <span class="unit">м/с</span>
+                </div>
+                <div id="status-wind-speed" class="status-indicator">● Норма</div>
+            </div>
+
+            <div class="card card-modern">
+                <h3>Обертання ротора</h3>
+                <div class="value">
+                    <span id="val-rotor" class="big-number">0</span>
+                    <span class="unit">об/хв</span>
+                </div>
+                <div id="status-rotor" class="status-indicator">● Норма</div>
+            </div>
+
+            <div class="card card-modern">
+                <h3>Вироблена потужність</h3>
+                <div class="value">
+                    <span id="val-power" class="big-number">0</span>
+                    <span class="unit">кВт</span>
+                </div>
+                <div id="status-power" class="status-indicator">● Норма</div>
+            </div>
+
+            <div class="card card-modern">
+                <h3>Кут нахилу лопатей</h3>
+                <div class="value">
+                    <span id="val-blade-angle" class="big-number">0</span>
+                    <span class="unit">°</span>
+                </div>
+                <div id="status-blade-angle" class="status-indicator">● Норма</div>
+            </div>
+
+            <div class="card card-modern">
+                <h3>Напрямок вітру</h3>
+                <div class="value direction-value">
+                    <span id="val-wind-direction" class="big-number">Пн</span>
+                    <div id="compass-arrow" class="compass" style="transform: rotate(0deg);">⬆</div>
+                </div>
+            </div>
+
+            <div class="card card-modern">
+                <h3>Гальмівна система</h3>
+                <div class="value">
+                    <span id="val-brakes" class="brake-status safe">Відпущена</span>
+                </div>
+            </div>
+        </main>
+
+        <section class="chart-section card-modern">
+            <h3>Графік потужності у реальному часі</h3>
+            <div class="chart-container">
+                <canvas id="powerChart"></canvas>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
