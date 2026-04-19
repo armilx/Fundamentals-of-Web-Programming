@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моніторинг Вітрової Електростанції</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Моніторинг вітрової електростанції</h1>
+        <p>Статус: <span id="status" class="status-offline">Офлайн</span></p>
+        <div class="row">
+            <div class="col-md-4"><div class="metric-card"><h3>Потужність</h3><h2 id="currentPower">-- МВт</h2></div></div>
+            <div class="col-md-4"><div class="metric-card"><h3>Швидкість вітру</h3><h2 id="windSpeed">-- м/с</h2></div></div>
+            <div class="col-md-4"><div class="metric-card"><h3>КВВП</h3><h2 id="capacityFactor">-- %</h2></div></div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6"><canvas id="windSpeedChart"></canvas></div>
+            <div class="col-md-6"><canvas id="turbinesChart"></canvas></div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6"><canvas id="cfGaugeChart"></canvas></div>
+            <div class="col-md-6"><canvas id="windRoseChart"></canvas></div>
+        </div>
+        <div class="row mt-4"><div class="col-md-12"><div id="dataTable" class="table-responsive"></div></div></div>
+    </div>
+    
+    <script src="api.js"></script>
+    <script src="charts.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
