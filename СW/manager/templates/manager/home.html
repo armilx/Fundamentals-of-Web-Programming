@@ -1,0 +1,90 @@
+{% extends 'manager/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold" style="color: #2c3e50; font-size: 2.5rem;">Генератор надійних паролів</h2>
+            <p class="text-muted fs-5">Створіть безпечний пароль в один клік та збережіть його у своє сховище.</p>
+        </div>
+
+        <div class="p-5 bg-light text-center mb-5" style="border-radius: 24px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.03); border: 2px dashed #dee2e6;">
+            <h1 id="password-display" class="display-3 fw-bold font-monospace mb-4" style="color: #0d6efd; letter-spacing: 4px; word-break: break-all;"></h1>
+            
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <button id="btn-generate" class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm fw-bold">🔄 Згенерувати новий</button>
+                <a id="btn-save" href="#" class="btn btn-outline-dark btn-lg rounded-pill px-5 shadow-sm fw-bold">💾 Зберегти в кабінет</a>
+            </div>
+        </div>
+
+        <div class="p-5 border" style="border-radius: 24px; background-color: #ffffff;">
+            <h4 class="fw-bold mb-4 text-dark">⚙️ Налаштування складності</h4>
+            
+            <div class="mb-5">
+                <label class="form-label fw-bold d-flex justify-content-between text-muted mb-3">
+                    <span>Довжина пароля</span>
+                    <span id="length-val" class="text-primary fs-4 fw-bold">16 символів</span>
+                </label>
+                <input type="range" id="pwd-length" class="form-range" min="8" max="32" value="16">
+            </div>
+
+            <div class="row fs-5 text-muted">
+                <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch form-switch-lg">
+                        <input class="form-check-input" type="checkbox" id="chk-upper" checked style="transform: scale(1.3); margin-right: 15px;">
+                        <label class="form-check-label fw-medium">Великі літери (A-Z)</label>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch form-switch-lg">
+                        <input class="form-check-input" type="checkbox" id="chk-numbers" checked style="transform: scale(1.3); margin-right: 15px;">
+                        <label class="form-check-label fw-medium">Цифри (0-9)</label>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch form-switch-lg">
+                        <input class="form-check-input" type="checkbox" id="chk-symbols" checked style="transform: scale(1.3); margin-right: 15px;">
+                        <label class="form-check-label fw-medium">Спецсимволи (!@#$)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const display = document.getElementById('password-display');
+        const lengthSlider = document.getElementById('pwd-length');
+        const lengthVal = document.getElementById('length-val');
+        const chkUpper = document.getElementById('chk-upper');
+        const chkNumbers = document.getElementById('chk-numbers');
+        const chkSymbols = document.getElementById('chk-symbols');
+        const btnGenerate = document.getElementById('btn-generate');
+        const btnSave = document.getElementById('btn-save');
+        function generatePassword() {
+            let charset = "abcdefghijklmnopqrstuvwxyz";
+            if (chkUpper.checked) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (chkNumbers.checked) charset += "0123456789";
+            if (chkSymbols.checked) charset += "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+
+            let length = lengthSlider.value;
+            let retVal = "";
+            for (let i = 0, n = charset.length; i < length; ++i) {
+                retVal += charset.charAt(Math.floor(Math.random() * n));
+            }
+            display.innerText = retVal;
+            btnSave.href = "/save-password/?pwd=" + encodeURIComponent(retVal);
+        }
+        lengthSlider.addEventListener('input', function() {
+            lengthVal.innerText = this.value + " символів";
+            generatePassword();
+        });
+        btnGenerate.addEventListener('click', generatePassword);
+        chkUpper.addEventListener('change', generatePassword);
+        chkNumbers.addEventListener('change', generatePassword);
+        chkSymbols.addEventListener('change', generatePassword);
+        generatePassword();
+    });
+</script>
+{% endblock %}

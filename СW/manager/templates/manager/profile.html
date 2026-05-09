@@ -1,0 +1,62 @@
+{% extends 'manager/base.html' %}
+{% block content %}
+<h2 class="fw-bold mb-4 text-center" style="color: #2c3e50;">Особистий кабінет</h2>
+{% if success_msg %}
+<div class="alert alert-success text-center fw-bold">{{ success_msg }}</div>
+{% endif %}
+{% if error_msg %}
+<div class="alert alert-danger text-center fw-bold">{{ error_msg }}</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="p-4 border h-100 d-flex flex-column justify-content-center align-items-center text-center" style="border-radius: 20px; background-color: #e3f2fd; border-color: #bbdefb !important;">
+            <div style="font-size: 60px;">👤</div>
+            <h1 class="display-3 fw-bold text-primary mb-0 mt-3">{{ saved_count }}</h1>
+            <p class="text-muted fs-5 fw-medium mt-2">Паролів у Сховищі</p>
+            <a href="/passwords/" class="btn btn-primary rounded-pill px-4 mt-3 w-100">Відкрити Сховище</a>
+            <a href="/logout/" class="btn btn-outline-danger w-100 rounded-pill mt-2">Вийти з акаунта</a>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="p-4 border mb-4" style="border-radius: 20px; background-color: #ffffff;">
+            <h5 class="fw-bold text-dark mb-3">Зміна особистих даних</h5>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="update_profile" value="1">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Логін</label>
+                        <input type="text" name="username" class="form-control" value="{{ request.user.username }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Електронна пошта</label>
+                        <input type="email" name="email" class="form-control" value="{{ request.user.email }}" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-dark rounded-pill px-4">Оновити дані</button>
+            </form>
+        </div>
+
+        <div class="p-4 border" style="border-radius: 20px; background-color: #ffffff;">
+            <h5 class="fw-bold text-dark mb-3">Зміна майстер-пароля</h5>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="change_password" value="1">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Новий пароль</label>
+                        <input type="password" name="new_password" class="form-control" placeholder="Введіть новий пароль" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Повторіть пароль</label>
+                        <input type="password" name="confirm_password" class="form-control" placeholder="Повторіть ще раз" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-danger rounded-pill px-4">Змінити пароль</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

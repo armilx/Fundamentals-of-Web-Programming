@@ -1,0 +1,32 @@
+{% extends 'manager/base.html' %}
+{% block content %}
+<div class="p-5">
+    <h2 class="fw-bold mb-4" style="color: #2c3e50;">Про проект PassGuard 🛡️</h2>
+    
+    <p class="fs-5 text-muted mb-4">
+        <strong>PassGuard</strong> — це сучасний менеджер паролів, розроблений в рамках курсової роботи. 
+        Головна мета проекту — забезпечити користувачів зручним та безпечним інструментом для генерації, перевірки та зберігання облікових даних.
+    </p>
+
+    <div class="row mt-5">
+        <div class="col-md-4 mb-4">
+            <div class="p-4 border h-100" style="border-radius: 20px;">
+                <h4 class="fw-bold text-primary">🔒 Безпека</h4>
+                <p class="text-muted">Усі паролі перед збереженням у базу даних проходять надійне шифрування за допомогою сучасних криптографічних алгоритмів.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="p-4 border h-100" style="border-radius: 20px;">
+                <h4 class="fw-bold text-primary">⚙️ Технології</h4>
+                <p class="text-muted">Серверна частина розроблена на базі фреймворку <strong>Django (Python)</strong>. Як база даних використовується надійна реляційна СКБД <strong>PostgreSQL</strong>.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="p-4 border h-100" style="border-radius: 20px;">
+                <h4 class="fw-bold text-primary">🎨 Інтерфейс</h4>
+                <p class="text-muted">Клієнтська частина побудована з використанням HTML5, CSS3 та бібліотеки Bootstrap 5 для забезпечення адаптивності.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

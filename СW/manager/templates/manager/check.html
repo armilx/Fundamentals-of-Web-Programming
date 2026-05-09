@@ -1,0 +1,45 @@
+{% extends 'manager/base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <h2 class="fw-bold mb-4" style="color: #2c3e50;">Перевірка надійності пароля</h2>
+        <p class="text-muted mb-5">Введіть свій поточний пароль, щоб дізнатися, наскільки він безпечний. Ми нікуди його не зберігаємо.</p>
+        
+        <input type="text" id="pwd-input" class="form-control form-control-lg text-center font-monospace mb-4" placeholder="Введіть пароль..." style="border-radius: 15px; font-size: 24px;">
+        
+        <div class="progress" style="height: 20px; border-radius: 10px;">
+            <div id="strength-bar" class="progress-bar" role="progressbar" style="width: 0%; transition: width 0.4s ease;"></div>
+        </div>
+        <h4 id="strength-text" class="mt-4 fw-bold text-muted">Введіть пароль для перевірки</h4>
+    </div>
+</div>
+
+<script>
+    document.getElementById('pwd-input').addEventListener('input', function(e) {
+        let val = e.target.value;
+        let score = 0;
+        
+        if (val.length > 0) score += 10;
+        if (val.length >= 8) score += 20;
+        if (val.length >= 12) score += 20;
+        if (/[A-Z]/.test(val)) score += 15;
+        if (/[0-9]/.test(val)) score += 15;
+        if (/[^A-Za-z0-9]/.test(val)) score += 20;
+
+        let bar = document.getElementById('strength-bar');
+        let text = document.getElementById('strength-text');
+        
+        bar.style.width = score + '%';
+        
+        if (val.length === 0) {
+            bar.style.width = '0%'; text.innerText = 'Введіть пароль для перевірки'; text.className = 'mt-4 fw-bold text-muted';
+        } else if (score < 40) {
+            bar.className = 'progress-bar bg-danger'; text.innerText = 'Слабкий пароль 🚨'; text.className = 'mt-4 fw-bold text-danger';
+        } else if (score < 80) {
+            bar.className = 'progress-bar bg-warning'; text.innerText = 'Нормальний пароль ⚠️'; text.className = 'mt-4 fw-bold text-warning';
+        } else {
+            bar.className = 'progress-bar bg-success'; text.innerText = 'Надійний пароль ✅'; text.className = 'mt-4 fw-bold text-success';
+        }
+    });
+</script>
+{% endblock %}

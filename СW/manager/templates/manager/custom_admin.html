@@ -1,0 +1,57 @@
+{% extends 'manager/base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold" style="color: #2c3e50;">⚙️ Панель Адміністратора</h2>
+    <span class="badge bg-danger fs-6">Режим Адміна</span>
+</div>
+<p class="text-muted mb-4">Тут ви бачите всіх користувачів сайту та можете керувати їхніми даними.</p>
+
+{% if success_msg %}
+<div class="alert alert-success fw-bold">{{ success_msg }}</div>
+{% endif %}
+
+<div class="table-responsive bg-white border p-4" style="border-radius: 20px;">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Логін</th>
+                <th>Поточний Email</th>
+                <th>Змінити Email</th>
+                <th>Змінити Пароль</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+            <tr>
+                <td class="fw-bold text-primary">{{ u.username }}</td>
+                <td class="text-muted">{{ u.email }}</td>
+                
+                <td>
+                    <form method="POST" class="d-flex gap-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="update_email">
+                        <input type="hidden" name="user_id" value="{{ u.id }}">
+                        <input type="email" name="new_email" class="form-control form-control-sm" placeholder="Нова пошта" required>
+                        <button type="submit" class="btn btn-sm btn-dark">Оновити</button>
+                    </form>
+                </td>
+
+                <td>
+                    <form method="POST" class="d-flex gap-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="update_password">
+                        <input type="hidden" name="user_id" value="{{ u.id }}">
+                        <input type="password" name="new_password" class="form-control form-control-sm" placeholder="Новий пароль" required>
+                        <button type="submit" class="btn btn-sm btn-danger">Змінити</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center text-muted py-4">Поки що немає зареєстрованих користувачів крім вас.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
