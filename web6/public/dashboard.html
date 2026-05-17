@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Дашборд - СЕС</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light p-4">
+    <div class="container">
+        <h2>Панель управління СЕС 5 МВт</h2>
+        <button id="getGen" class="btn btn-primary mt-3">Отримати дані генерації</button>
+        <button id="getPanels" class="btn btn-secondary mt-3">Статус панелей</button>
+        <pre id="result" class="bg-dark text-light p-3 mt-3 rounded">Тут з'являться дані після натискання кнопок</pre>
+    </div>
+    <script>
+        async function fetchData(url) {
+            const res = await fetch(url);
+            if (res.status === 401 || res.status === 403) {
+                document.getElementById('result').innerText = 'Помилка: Немає доступу (Код ' + res.status + ')';
+                return;
+            }
+            const data = await res.json();
+            document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+        }
+
+        document.getElementById('getGen').addEventListener('click', () => fetchData('/api/solar/generation'));
+        document.getElementById('getPanels').addEventListener('click', () => fetchData('/api/solar/panels/status'));
+    </script>
+</body>
+</html>
